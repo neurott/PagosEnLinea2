@@ -20,41 +20,11 @@
                     </select>
                 </div>
             </div>
-        <div class="card">
-                <h2>Esval</h2>
-                <button class="pago-btn" data-url="https://www.esval.cl/personas/inicio?pago-rapido" onclick="redirigir(this.dataset.url)">Pagar ahora</button>
-                <div class="estado-pago">
-                    <select onchange="actualizarEstado('esval', this.value)">
-                        <option value="pendiente">Pendiente</option>
-                        <option value="pagado">Pagado</option>
-                    </select>
-                </div>
-            </div>
-            <div class="card">
-                <h2>Claro Chile</h2>
-                <button class="pago-btn" data-url="https://sucursalvirtual.clarochile.cl/PagoExpress/index" onclick="redirigir(this.dataset.url)">Pagar ahora</button>
-                <div class="estado-pago">
-                    <select onchange="actualizarEstado('claro', this.value)">
-                        <option value="pendiente">Pendiente</option>
-                        <option value="pagado">Pagado</option>
-                    </select>
-                </div>
-            </div>
             <div class="card">
                 <h2>Entel</h2>
                 <button class="pago-btn" data-url="https://miperfil.entel.cl/CL_Web_Unified_Payment_EU/" onclick="redirigir(this.dataset.url)">Pagar ahora</button>
                 <div class="estado-pago">
                     <select onchange="actualizarEstado('entel', this.value)">
-                        <option value="pendiente">Pendiente</option>
-                        <option value="pagado">Pagado</option>
-                    </select>
-                </div>
-            </div>
-            <div class="card">
-                <h2>Movistar</h2>
-                <button class="pago-btn" data-url="https://pagos.movistar.cl/publico" onclick="redirigir(this.dataset.url)">Pagar ahora</button>
-                <div class="estado-pago">
-                    <select onchange="actualizarEstado('movistar', this.value)">
                         <option value="pendiente">Pendiente</option>
                         <option value="pagado">Pagado</option>
                     </select>
@@ -80,16 +50,6 @@
                     </select>
                 </div>
             </div>
-            <div class="card">
-                <h2>Wom</h2>
-                <button class="pago-btn" data-url="https://www.wom.cl/paga-aqui/" onclick="redirigir(this.dataset.url)">Pagar ahora</button>
-                <div class="estado-pago">
-                    <select onchange="actualizarEstado('wom', this.value)">
-                        <option value="pendiente">Pendiente</option>
-                        <option value="pagado">Pagado</option>
-                    </select>
-                </div>
-            </div>
     </main>
         <!-- Modal para Historial de Pagos -->
     <div id="modalHistorial" class="modal">
@@ -102,14 +62,10 @@
                 <div class="filtros">
                     <select id="filtroServicio">
                         <option value="todos">Todos los servicios</option>
-                        <option value="claro">Claro Chile</option>
                         <option value="chilquinta">Chilquinta</option>
-                        <option value="esval">Esval</option>
                         <option value="agua">Los Maitenes</option>
                         <option value="mundo">Mundo Pacífico</option>
                         <option value="entel">Entel</option>
-                        <option value="movistar">Movistar</option>
-                        <option value="wom">Wom</option>
                     </select>
                     <button id="limpiarHistorial" class="btn-secundario">Limpiar Historial</button>
                 </div>
