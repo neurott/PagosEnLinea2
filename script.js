@@ -23,7 +23,7 @@ function actualizarEstado(servicio, estado) {
 
 // Función para cargar los estados guardados al cargar la página
 function cargarEstados() {
-    const servicios = ['claro', 'chilquinta', 'esval', 'agua', 'mundo', 'entel', 'movistar', 'wom'];
+    const servicios = ['chilquinta','agua', 'mundo', 'entel', 'movistar',];
     
     servicios.forEach(servicio => {
         const estadoGuardado = localStorage.getItem('estado_' + servicio);
@@ -103,14 +103,12 @@ function mostrarHistorial() {
         
         // Obtener nombre del servicio para mostrar
         const nombresServicios = {
-            'claro': 'Claro Chile',
             'chilquinta': 'Chilquinta',
-            'esval': 'Esval',
             'agua': 'Los Maitenes',
             'mundo': 'Mundo Pacífico',
             'entel': 'Entel',
             'movistar': 'Movistar',
-            'wom': 'Wom'
+            
         };
         
         const nombreServicio = nombresServicios[item.servicio] || item.servicio;

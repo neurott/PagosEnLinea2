@@ -31,6 +31,16 @@
                 </div>
             </div>
             <div class="card">
+                <h2>Movistar</h2>
+                <button class="pago-btn" data-url="https://pagos.movistar.cl/publico" onclick="redirigir(this.dataset.url)">Pagar ahora</button>
+                <div class="estado-pago">
+                    <select onchange="actualizarEstado('movistar', this.value)">
+                        <option value="pendiente">Pendiente</option>
+                        <option value="pagado">Pagado</option>
+                    </select>
+                </div>
+            </div>
+            <div class="card">
                 <h2>Los Maitenes</h2> 
                 <button class="pago-btn" data-url="https://www.gestionelectronica.cl/ingreso_emp4/consulta/form-contrato.php?token=76dc611d6ebaafc66cc0879c71b5db5c" onclick="redirigir(this.dataset.url)">Pagar ahora</button>
                 <div class="estado-pago">
