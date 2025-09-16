@@ -1,0 +1,659 @@
+html, body{
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #121212;
+    color: #333;
+}
+
+.grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.card{
+    background: rgb(255, 255, 255);
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    padding: 30px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 250px;
+    border-left: 5px solid transparent;
+    position: relative;
+}
+
+.card:hover{
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+}
+
+.card h2{
+    margin: 0 0 15px 0;
+    color: #292626;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+/*.card p{
+    color: #666;
+    margin-bottom: 25px;
+    font-size: 1.1rem;
+    flex-grow: 1;
+}*/
+
+
+.pago-btn {
+    background: #9f1d99;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 8px rgba(191, 39, 225, 0.3);
+    width: 80%;
+    max-width: 200px;
+    transition: opacitiy 0.3s ease, transform 0.3s ease;
+}
+
+.pago-btn:hover {
+    background: #4f63e5;
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(162, 61, 151, 0.4);
+}
+
+.card.pagado{
+    background: #d0ffd0;
+    
+}
+
+.card.pagado h2{
+    color: #1e7e34;
+    
+}
+
+.card.pagado .pago-btn {
+    background: #28a745;
+    box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+    cursor: default;
+}
+
+.card.pagado .pago-btn:hover {
+    background: #28a745;
+    transform: none;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.3);
+}
+
+.card.pagado .estado-pago select{
+    background-color: #41724d;
+    color: #ffffff;
+    border-color: #c3e6cb;
+    margin-top: 25px;
+}
+
+.estado-pago {
+    margin-top: 15px;
+    width: 100%;
+    position: relative;
+}
+
+.estado-pago select {
+    width: 80%;
+    padding:8px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    text-align: center;
+    font-size: 0.9rem;
+    background-color: #f8f9fa;
+    cursor: pointer;
+    appearance: none;
+    box-sizing: border-box;
+}
+
+.estado-pago select:focus {
+    outline: none;
+    border-color: #1d1b1b;
+}
+
+main{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+footer{
+    text-align: center;
+    padding: 1.2rem;
+    background: #121212;
+    color: #e0e0e0;
+    font-size: 0.9rem;
+}
+
+.btn-flotante {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #9f1d99;
+    color: white;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    transition: all 0.3s;
+}
+
+.btn-flotante:hover {
+    background: #4f63e5;
+    transform: scale(1.1);
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-contenido {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 0;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    animation: slideIn 0.3s;
+}
+
+@keyframes slideIn {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-header {
+    padding: 15px 20px;
+    background: #9f1d99;
+    color: white;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.cerrar {
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.cerrar:hover {
+    color: #ddd;
+}
+
+.modal-body {
+    padding: 20px;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.filtros {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.filtros select, .btn-secundario {
+    padding: 8px 12px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    background-color: #f8f9fa;
+    font-size: 0.9rem;
+}
+
+.btn-secundario {
+    background: #6c757d;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-secundario:hover {
+    background: #5a6268;
+}
+
+.lista-historial {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.item-historial {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 12px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info-pago {
+    flex: 1;
+}
+
+.servicio {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.fecha {
+    color: #6c757d;
+    font-size: 0.85rem;
+}
+
+.accion-historial {
+    color: #dc3545;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 4px;
+    transition: background 0.3s;
+}
+
+.accion-historial:hover {
+    background: rgba(220, 53, 69, 0.1);
+}
+
+.vacio {
+    text-align: center;
+    color: #6c757d;
+    padding: 20px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .modal-contenido {
+        width: 95%;
+        margin: 10% auto;
+    }
+    
+    .filtros {
+        flex-direction: column;
+    }
+    
+    .filtros select, .btn-secundario {
+        width: 100%;
+    }
+    
+    .item-historial {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .accion-historial {
+        align-self: flex-end;
+    }
+}
+/* Responsive */
+@media (max-width: 768px) {
+    .grid {
+        padding: 20px 15px;
+        gap: 20px;
+    }
+    
+    .card {
+        min-height: 220px;
+        padding: 20px;
+    }
+    
+    header {
+        padding: 1rem;
+    }
+}
+
+.card.pagado .pago-btn:hover {
+    background: #28a745;
+    transform: none;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.3);
+}
+
+.estado-pago {
+    margin-top: 15px;
+    width: 100%;
+    position: relative;
+}
+
+/* SELECT PERSONALIZADO */
+.custom-select {
+    position: relative;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.select-selected {
+    background-color: #f8f9fa;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    padding: 8px 16px;
+    cursor: pointer;
+    user-select: none;
+    text-align: center;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+}
+
+.select-selected:after {
+    position: absolute;
+    content: "";
+    top: 14px;
+    right: 15px;
+    width: 8px;
+    height: 8px;
+    border: 2px solid transparent;
+    border-color: #333 transparent transparent transparent;
+    transform: rotate(135deg);
+    transition: all 0.3s;
+}
+
+.select-selected.select-arrow-active:after {
+    transform: rotate(-45deg);
+    top: 16px;
+}
+
+.select-items {
+    position: absolute;
+    background-color: white;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 99;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    margin-top: 4px;
+    overflow: hidden;
+    display: none;
+}
+
+.select-item {
+    padding: 10px 16px;
+    cursor: pointer;
+    user-select: none;
+    text-align: center;
+    transition: background-color 0.2s;
+}
+
+.select-item:hover {
+    background-color: #f0f0f0;
+}
+
+.select-item.selected {
+    background-color: #9f1d99;
+    color: white;
+}
+
+.card.pagado .select-selected {
+    background-color: #41724d;
+    color: #ffffff;
+    border-color: #c3e6cb;
+}
+
+/* Ocultar select nativo */
+.select-hidden {
+    display: none;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+footer {
+    text-align: center;
+    padding: 1.2rem;
+    background: #121212;
+    color: #e0e0e0;
+    font-size: 0.9rem;
+}
+
+/* Estilos para el historial de pagos */
+.btn-flotante {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #9f1d99;
+    color: white;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    transition: all 0.3s;
+}
+
+.btn-flotante:hover {
+    background: #4f63e5;
+    transform: scale(1.1);
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-contenido {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 0;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    animation: slideIn 0.3s;
+}
+
+@keyframes slideIn {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-header {
+    padding: 15px 20px;
+    background: #9f1d99;
+    color: white;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.cerrar {
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.cerrar:hover {
+    color: #ddd;
+}
+
+.modal-body {
+    padding: 20px;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.filtros {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.filtros select, .btn-secundario {
+    padding: 8px 12px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    background-color: #f8f9fa;
+    font-size: 0.9rem;
+}
+
+.btn-secundario {
+    background: #6c757d;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-secundario:hover {
+    background: #5a6268;
+}
+
+.lista-historial {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.item-historial {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 12px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info-pago {
+    flex: 1;
+}
+
+.servicio {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.fecha {
+    color: #6c757d;
+    font-size: 0.85rem;
+}
+
+.accion-historial {
+    color: #dc3545;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 4px;
+    transition: background 0.3s;
+}
+
+.accion-historial:hover {
+    background: rgba(220, 53, 69, 0.1);
+}
+
+.vacio {
+    text-align: center;
+    color: #6c757d;
+    padding: 20px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .grid {
+        padding: 20px 15px;
+        gap: 20px;
+    }
+    
+    .card {
+        min-height: 220px;
+        padding: 20px;
+    }
+    
+    .modal-contenido {
+        width: 95%;
+        margin: 10% auto;
+    }
+    
+    .filtros {
+        flex-direction: column;
+    }
+    
+    .filtros select, .btn-secundario {
+        width: 100%;
+    }
+    
+    .item-historial {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .accion-historial {
+        align-self: flex-end;
+    }
+}
