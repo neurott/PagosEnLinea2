@@ -17,8 +17,6 @@ function actualizarEstado(servicio, estado) {
         boton.style.display = 'block';
     }
 }
-
-// Función para cargar los estados guardados al cargar la página
 function cargarEstados() {
     const servicios = ['chilquinta','agua', 'mundo', 'entel', 'movistar',];
     
@@ -123,63 +121,78 @@ function eliminarRegistro(timestamp) {
 }
 
 function limpiarHistorial() {
-    if (confirm('¿Estás seguro de que quieres eliminar todo el historial de pagos? Esta acción no se puede deshacer.')) {
+    if (confirm('¿Seguro que quieres eliminar todo el historial?')) {
         localStorage.removeItem('historial_pagos');
         mostrarHistorial();
     }
 }
 
-// Modificar la función actualizarEstado para que guarde en el historial
-function actualizarEstado(servicio, estado) {
-    // Guardar en localStorage
-    localStorage.setItem('estado_' + servicio, estado);
-    
-    // Guardar en historial si se marcó como pagado
-    if (estado === 'pagado') {
-        guardarEnHistorial(servicio, estado);
-    }
-    
-    // Actualizar la apariencia de la tarjeta y el botón
-    const card = document.querySelector(`select[onchange*="${servicio}"]`).closest('.card');
-    const boton = card.querySelector('.pago-btn');
-    
-    if (estado === 'pagado') {
-        card.classList.add('pagado');
-        boton.style.display = 'none'; // Ocultar el botón
-    } else {
-        card.classList.remove('pagado');
-        boton.style.display = 'block'; // Mostrar el botón
-    }
-}
-
-// Eventos para el modal de historial
 document.addEventListener('DOMContentLoaded', function() {
-    // Botón flotante
+    const customSelects = document.querySelectorAll('.custom-select');
+
+    customSelects.forEach(select => {
+        const selectElement = select.querySelector('select');
+        const selectedDiv = select.querySelector('.select-selected');
+        const itemsContainer = select.querySelector('.select-items');
+
+        selectedDiv.textContent = selectElement.options[selectElement.selectedIndex].text;
+
+        selectedDiv.addEventListener('click', function(e) {
+            e.stopPropagation();
+            closeAllSelect(this);
+            this.nextElementSibling.style.display = 'block';
+            this.classList.add('select-arrow-active');
+        });
+
+        itemsContainer.querySelectorAll('.select-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const value = this.getAttribute('data-value');
+                const text = this.textContent;
+                selectElement.value = value;
+                selectedDiv.textContent = text;
+                itemsContainer.style.display = 'none';
+                selectedDiv.classList.remove('select-arrow-active');
+                selectElement.dispatchEvent(new Event('change'));
+            });
+        });
+    });
+
+document.addEventListener('click', closeAllSelect);
+
+    function closeAllSelect(elmnt) {
+        const items = document.querySelectorAll('.select-items');
+        const selected = document.querySelectorAll('.select-selected');
+
+        for (let i = 0; i < selected.length; i++) {
+            if (elmnt !== selected[i] && elmnt !== selected[i].previousElementSibling) {
+                selected[i].classList.remove('select-arrow-active');
+            }
+        }
+
+        for (let i = 0; i < items.length; i++) {
+            if (elmnt !== items[i] && elmnt !== items[i].previousElementSibling) {
+                items[i].style.display = 'none';
+            }
+        }
+    }
+
     document.getElementById('btnHistorial').addEventListener('click', function() {
         document.getElementById('modalHistorial').style.display = 'block';
         mostrarHistorial();
     });
-    
-    // Cerrar modal
+
     document.querySelector('.cerrar').addEventListener('click', function() {
         document.getElementById('modalHistorial').style.display = 'none';
     });
-    
-    // Cerrar modal al hacer clic fuera
+
     window.addEventListener('click', function(event) {
         if (event.target === document.getElementById('modalHistorial')) {
             document.getElementById('modalHistorial').style.display = 'none';
         }
     });
-    
-    // Filtro de servicio
-    document.getElementById('filtroServicio').addEventListener('change', mostrarHistorial);
-    
-    // Limpiar historial
-    document.getElementById('limpiarHistorial').addEventListener('click', limpiarHistorial);
-});
 
-// Cargar estados cuando la página se carga
-window.onload = function() {
+    document.getElementById('filtroServicio').addEventListener('change', mostrarHistorial);
+    document.getElementById('limpiarHistorial').addEventListener('click', limpiarHistorial);
+
     cargarEstados();
-};
+});
