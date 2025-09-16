@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-document.addEventListener('click', closeAllSelect);
+    document.addEventListener('click', closeAllSelect);
 
     function closeAllSelect(elmnt) {
         const items = document.querySelectorAll('.select-items');
