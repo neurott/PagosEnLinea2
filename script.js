@@ -2,23 +2,20 @@ function redirigir(url) {
     window.open(url, '_blank');
 }
 
-// Función para actualizar y guardar el estado de pago
 function actualizarEstado(servicio, estado) {
-    // Guardar en localStorage
     localStorage.setItem('estado_' + servicio, estado);
-    
-    // Actualizar la apariencia de la tarjeta y el botón
+
     const card = document.querySelector(`select[onchange*="${servicio}"]`).closest('.card');
     const boton = card.querySelector('.pago-btn');
-    
+
     if (estado === 'pagado') {
         card.classList.add('pagado');
-        boton.style.display = 'none'; // Ocultar el botón
+        boton.style.display = 'none';
+        guardarEnHistorial(servicio, estado);
     } else {
         card.classList.remove('pagado');
-        boton.style.display = 'block'; // Mostrar el botón
+        boton.style.display = 'block';
     }
-
 }
 
 // Función para cargar los estados guardados al cargar la página
@@ -31,43 +28,38 @@ function cargarEstados() {
         
         if (estadoGuardado && selector) {
             selector.value = estadoGuardado;
-            
-            // Actualizar la apariencia de la tarjeta según el estado guardado
+
             const card = selector.closest('.card');
             const boton = card.querySelector('.pago-btn');
+            const customSelect = card.querySelector('.select-selected');
             
             if (estadoGuardado === 'pagado') {
                 card.classList.add('pagado');
-                boton.style.display = 'none'; // Ocultar el botón
+                boton.style.display = 'none';
+                customSelect.textContent = 'Pagado';
             } else {
                 card.classList.remove('pagado');
-                boton.style.display = 'block'; // Mostrar el botón
+                boton.style.display = 'block';
+                customSelect.textContent = 'Pendiente';
             }
         }
     });
 }
 
-// Funciones para el historial de pagos
 function guardarEnHistorial(servicio, estado) {
-    if (estado !== 'pagado') return; // Solo guardamos cuando se marca como pagado
+    if (estado !== 'pagado') return;
     
     const ahora = new Date();
     const registro = {
-        servicio: servicio,
+        servicio,
         fecha: ahora.toISOString(),
         timestamp: ahora.getTime()
     };
-    
-    // Obtener historial existente o inicializar uno nuevo
+
     let historial = JSON.parse(localStorage.getItem('historial_pagos')) || [];
-    
-    // Agregar nuevo registro al inicio del array
     historial.unshift(registro);
-    
-    // Guardar en localStorage
     localStorage.setItem('historial_pagos', JSON.stringify(historial));
-    
-    // Actualizar la visualización si el modal está abierto
+
     if (document.getElementById('modalHistorial').style.display === 'block') {
         mostrarHistorial();
     }
@@ -76,16 +68,12 @@ function guardarEnHistorial(servicio, estado) {
 function mostrarHistorial() {
     const listaHistorial = document.getElementById('listaHistorial');
     const filtroServicio = document.getElementById('filtroServicio').value;
-    
-    // Obtener historial
     let historial = JSON.parse(localStorage.getItem('historial_pagos')) || [];
     
-    // Filtrar por servicio si es necesario
     if (filtroServicio !== 'todos') {
         historial = historial.filter(item => item.servicio === filtroServicio);
     }
     
-    // Generar HTML
     if (historial.length === 0) {
         listaHistorial.innerHTML = '<div class="vacio">No hay registros de pagos</div>';
         return;
@@ -100,8 +88,7 @@ function mostrarHistorial() {
             hour: '2-digit',
             minute: '2-digit'
         });
-        
-        // Obtener nombre del servicio para mostrar
+
         const nombresServicios = {
             'chilquinta': 'Chilquinta',
             'agua': 'Los Maitenes',
@@ -110,13 +97,11 @@ function mostrarHistorial() {
             'movistar': 'Movistar',
             
         };
-        
-        const nombreServicio = nombresServicios[item.servicio] || item.servicio;
-        
+
         return `
             <div class="item-historial pagado">
                 <div class="info-pago">
-                    <div class="servicio">${nombreServicio}</div>
+                    <div class="servicio">${nombresServicios[item.servicio] || item.servicio}</div>
                     <div class="fecha">${fechaFormateada}</div>
                 </div>
                 <div class="accion-historial" onclick="eliminarRegistro(${item.timestamp})">
